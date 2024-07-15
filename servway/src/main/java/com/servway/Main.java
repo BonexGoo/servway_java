@@ -1,14 +1,24 @@
 package com.servway;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
+import java.nio.file.Paths;
+import java.security.KeyStore;
 import java.util.Collections;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLParameters;
+import javax.net.ssl.TrustManagerFactory;
 import org.java_websocket.WebSocket;
 import org.java_websocket.drafts.Draft;
 import org.java_websocket.drafts.Draft_6455;
 import org.java_websocket.handshake.ClientHandshake;
+import org.java_websocket.server.SSLParametersWebSocketServerFactory;
 import org.java_websocket.server.WebSocketServer;
+import org.json.JSONObject;
 
 public class Main extends WebSocketServer
 {
@@ -33,38 +43,71 @@ public class Main extends WebSocketServer
     }
 
     @Override
-    public void onClose(WebSocket conn, int code, String reason, boolean remote)
+    public void onOpen(WebSocket conn, ClientHandshake handshake)
     {
-        conn.send("onClose - OK");
+        System.out.println("onOpen - OK");
+        conn.send("onOpen - OK");
     }
 
     @Override
-    public void onOpen(WebSocket conn, ClientHandshake handshake)
+    public void onClose(WebSocket conn, int code, String reason, boolean remote)
     {
-        conn.send("onOpen - OK");
+        System.out.println("onClose - OK");
+        conn.send("onClose - OK");
     }
 
     @Override
     public void onError(WebSocket conn, Exception ex)
     {
+        System.out.println("onError - OK");
         conn.send("onError - OK");
     }
 
     @Override
     public void onMessage(WebSocket conn, String message)
     {
-        conn.send("onMessage1 - OK");
+        JSONObject in = new JSONObject(message);
+        if(in.getString("type").compareTo("Login") == 0)
+        {
+            JSONObject out = new JSONObject();
+            out.put("type", "Logined");
+            out.put("author", "Man");
+            out.put("token", "1234");
+            conn.send(out.toString());
+        }
     }
 
     @Override
     public void onMessage(WebSocket conn, ByteBuffer message)
     {
+        System.out.println("onMessage2 - OK");
         conn.send("onMessage2 - OK");
     }
 
     public static void main(String[] args) throws InterruptedException, Exception
     {
+        /*String STORETYPE = "JKS";
+        String KEYSTORE = Paths.get("servway", "src", "test", "java", "server.jks").toString();
+        String STOREPASSWORD = "server1234";
+        String KEYPASSWORD = "server1234";
+
+        KeyStore ks = KeyStore.getInstance(STORETYPE);
+        File kf = new File(KEYSTORE);
+        ks.load(new FileInputStream(kf), STOREPASSWORD.toCharArray());
+
+        KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
+        kmf.init(ks, KEYPASSWORD.toCharArray());
+        TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
+        tmf.init(ks);
+
+        SSLContext sslContext = null;
+        sslContext = SSLContext.getInstance("TLS");
+        sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
+
+        SSLParameters sslParams = new SSLParameters();
+        sslParams.setNeedClientAuth(true);*/
         Main sw = new Main(8981);
+        //sw.setWebSocketFactory(new SSLParametersWebSocketServerFactory(sslContext, sslParams));
         sw.start();
     }
 }
