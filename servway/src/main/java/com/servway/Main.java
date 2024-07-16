@@ -1,22 +1,22 @@
 package com.servway;
 
-import java.io.File;
-import java.io.FileInputStream;
+//import java.io.File;
+//import java.io.FileInputStream;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
-import java.nio.file.Paths;
-import java.security.KeyStore;
+//import java.nio.file.Paths;
+//import java.security.KeyStore;
 import java.util.Collections;
-import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLParameters;
-import javax.net.ssl.TrustManagerFactory;
+//import javax.net.ssl.KeyManagerFactory;
+//import javax.net.ssl.SSLContext;
+//import javax.net.ssl.SSLParameters;
+//import javax.net.ssl.TrustManagerFactory;
 import org.java_websocket.WebSocket;
 import org.java_websocket.drafts.Draft;
 import org.java_websocket.drafts.Draft_6455;
 import org.java_websocket.handshake.ClientHandshake;
-import org.java_websocket.server.SSLParametersWebSocketServerFactory;
+//import org.java_websocket.server.SSLParametersWebSocketServerFactory;
 import org.java_websocket.server.WebSocketServer;
 import org.json.JSONObject;
 
