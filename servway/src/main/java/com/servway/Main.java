@@ -37,6 +37,8 @@ public class Main extends WebSocketServer
         super(new InetSocketAddress(port), Collections.<Draft>singletonList(draft));
     }
 
+    ////////////////////////////////////////////////////////////
+    // override
     @Override
     public void onStart()
     {
@@ -45,45 +47,52 @@ public class Main extends WebSocketServer
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake)
     {
-        System.out.println("onOpen - OK");
-        conn.send("onOpen - OK");
+        //System.out.println("onOpen - OK");
+        //conn.send("onOpen - OK");
     }
 
     @Override
     public void onClose(WebSocket conn, int code, String reason, boolean remote)
     {
-        System.out.println("onClose - OK");
-        conn.send("onClose - OK");
+        //System.out.println("onClose - OK");
+        //conn.send("onClose - OK");
     }
 
     @Override
     public void onError(WebSocket conn, Exception ex)
     {
-        System.out.println("onError - OK");
-        conn.send("onError - OK");
+        //System.out.println("onError - OK");
+        //conn.send("onError - OK");
     }
 
     @Override
     public void onMessage(WebSocket conn, String message)
     {
         JSONObject in = new JSONObject(message);
-        if(in.getString("type").compareTo("Login") == 0)
+        switch(in.getString("type"))
         {
-            JSONObject out = new JSONObject();
-            out.put("type", "Logined");
-            out.put("author", "Man");
-            out.put("token", "1234");
-            conn.send(out.toString());
+        case "Login": mServWay.OnLogin(conn, in); break;
+        case "OnLoginUpdate": mServWay.OnLoginUpdate(conn, in); break;
+        case "OnLogout": mServWay.OnLogout(conn, in); break;
+        case "OnFocusProfile": mServWay.OnFocusProfile(conn, in); break;
+        case "OnUnfocusProfile": mServWay.OnUnfocusProfile(conn, in); break;
+        case "OnLockAsset": mServWay.OnLockAsset(conn, in); break;
+        case "OnUnlockAsset": mServWay.OnUnlockAsset(conn, in); break;
+        case "OnFocusRange": mServWay.OnFocusRange(conn, in); break;
+        case "OnUnfocusRange": mServWay.OnUnfocusRange(conn, in); break;
         }
+
     }
 
     @Override
     public void onMessage(WebSocket conn, ByteBuffer message)
     {
-        System.out.println("onMessage2 - OK");
-        conn.send("onMessage2 - OK");
+        //System.out.println("onMessage2 - OK");
+        //conn.send("onMessage2 - OK");
     }
 
+    ////////////////////////////////////////////////////////////
+    // main
     public static void main(String[] args) throws InterruptedException, Exception
     {
         /*String STORETYPE = "JKS";
@@ -110,4 +119,8 @@ public class Main extends WebSocketServer
         //sw.setWebSocketFactory(new SSLParametersWebSocketServerFactory(sslContext, sslParams));
         sw.start();
     }
+
+    ////////////////////////////////////////////////////////////
+    // member
+    ServWay mServWay = new ServWay();
 }

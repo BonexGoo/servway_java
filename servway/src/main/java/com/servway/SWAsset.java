@@ -1,8 +1,8 @@
 package com.servway;
 
-public class ZDAsset extends ZDRecordable
+public class SWAsset extends SWRecordable
 {
-    public ZDAsset()
+    public SWAsset()
     {
     }
 
@@ -40,5 +40,5 @@ public class ZDAsset extends ZDRecordable
     ////////////////////////////////////////////////////////////
     // member
     public boolean mLocked = false;
-    public ZDRoute mRoute = new ZDRoute();
+    public SWRoute mRoute = new SWRoute();
 }

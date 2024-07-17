@@ -2,9 +2,9 @@ package com.servway;
 
 import java.util.ArrayList;
 
-public abstract class ZDFocusable
+public abstract class SWFocusable
 {
-    public ZDFocusable()
+    public SWFocusable()
     {
     }
 

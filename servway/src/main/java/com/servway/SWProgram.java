@@ -2,9 +2,9 @@ package com.servway;
 
 import java.util.Hashtable;
 
-public class ZDProgram
+public class SWProgram
 {
-    public ZDProgram()
+    public SWProgram()
     {
     }
 
@@ -15,29 +15,29 @@ public class ZDProgram
 
     ////////////////////////////////////////////////////////////
     // method
-    public ZDProfile GetProfile(String programid, String author, boolean entering)
+    public SWProfile GetProfile(String programid, String author, boolean entering)
     {
         return null;
     }
 
-    public ZDAsset GetAsset(String programid, final ZDRoute route)
+    public SWAsset GetAsset(String programid, final SWRoute route)
     {
         return null;
     }
 
-    public ZDRange ValidRange(String programid, final ZDRoute route)
+    public SWRange ValidRange(String programid, final SWRoute route)
     {
         return mRanges.get(route.mPath);
     }
 
-    public ZDRoute ParseRoute(String programid, String route)
+    public SWRoute ParseRoute(String programid, String route)
     {
         return ParseRoute(programid, route, -1);
     }
 
-    public ZDRoute ParseRoute(String programid, String route, int writable_server)
+    public SWRoute ParseRoute(String programid, String route, int writable_server)
     {
-        return new ZDRoute();
+        return new SWRoute();
     }
 
     ////////////////////////////////////////////////////////////
@@ -55,7 +55,7 @@ public class ZDProgram
     ////////////////////////////////////////////////////////////
     // member
     public Hashtable<String, String> mFastLogin = new Hashtable<>(); // [deviceid:ClInavrmjQ] → author
-    public Hashtable<String, ZDProfile> mProfiles = new Hashtable<>(); // [author:BonexGoo] → profile
-    public Hashtable<String, ZDAsset> mAssets = new Hashtable<>(); // [path:board/post/33] → asset
-    private Hashtable<String, ZDRange> mRanges = new Hashtable<>(); // [path:board/post/33] → peers
+    public Hashtable<String, SWProfile> mProfiles = new Hashtable<>(); // [author:BonexGoo] → profile
+    public Hashtable<String, SWAsset> mAssets = new Hashtable<>(); // [path:board/post/33] → asset
+    private Hashtable<String, SWRange> mRanges = new Hashtable<>(); // [path:board/post/33] → peers
 }

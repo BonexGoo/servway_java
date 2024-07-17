@@ -2,9 +2,9 @@ package com.servway;
 
 import org.json.JSONObject;
 
-public abstract class ZDRecordable extends ZDFocusable
+public abstract class SWRecordable extends SWFocusable
 {
-    public ZDRecordable()
+    public SWRecordable()
     {
     }
 

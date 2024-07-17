@@ -1,19 +1,13 @@
 package com.servway;
 
-public class ZDProfile extends ZDRecordable
+public class SWRange extends SWFocusable
 {
-    public ZDProfile()
+    public SWRange()
     {
     }
 
     @Override
     protected void finalize() throws Throwable
-    {
-    }
-
-    ////////////////////////////////////////////////////////////
-    // method
-    public void ValidStatus(int server, boolean entered)
     {
     }
 
@@ -38,8 +32,7 @@ public class ZDProfile extends ZDRecordable
 
     ////////////////////////////////////////////////////////////
     // member
-    public boolean mEntered = false;
-    public String mPassword = new String();
-    public int mWritten = 0;
-    public int mLike = 0;
+    public SWRoute mRoute = new SWRoute();
+    public int mFirst = 1;
+    public int mLast = -1;
 }

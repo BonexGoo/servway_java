@@ -6,9 +6,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 import org.json.JSONObject;
 
-public class ZDToken
+public class SWToken
 {
-    public ZDToken()
+    public SWToken()
     {
     }
 
@@ -67,7 +67,7 @@ public class ZDToken
     String mProgramID; // ZayPro
     String mAuthor; // BonexGoo
     String mDeviceID; // ClInavrmjQ
-    Hashtable<String, ZDRoute> mLockedRoutes; // [lockid:123456] → route
+    Hashtable<String, SWRoute> mLockedRoutes; // [lockid:123456] → route
     Hashtable<Integer, Integer> mExecutedProcessIDs; // [runid] → ProcessID
     Queue<Download> mDownloadFiles = new LinkedList<>(); // [path:board/post/33/python/a.py] → FileData
 }
