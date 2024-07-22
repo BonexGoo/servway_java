@@ -81,7 +81,6 @@ public class Main extends WebSocketServer
         case "OnFocusRange": mServWay.OnFocusRange(conn, in); break;
         case "OnUnfocusRange": mServWay.OnUnfocusRange(conn, in); break;
         }
-
     }
 
     @Override

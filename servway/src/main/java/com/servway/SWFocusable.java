@@ -2,6 +2,8 @@ package com.servway;
 
 import java.util.ArrayList;
 
+import org.java_websocket.WebSocket;
+
 public abstract class SWFocusable
 {
     public SWFocusable()
@@ -15,15 +17,15 @@ public abstract class SWFocusable
 
     ////////////////////////////////////////////////////////////
     // method
-    public void Bind(int peerid)
+    public void Bind(WebSocket peer)
     {
     }
 
-    public void Unbind(int peerid)
+    public void Unbind(WebSocket peer)
     {
     }
 
-    public void SendPacket(int server, int peerid)
+    public void SendPacket(int server, WebSocket peer)
     {
     }
 

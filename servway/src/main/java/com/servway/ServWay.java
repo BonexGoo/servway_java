@@ -1,7 +1,6 @@
 package com.servway;
 
 import java.util.Hashtable;
-
 import org.java_websocket.WebSocket;
 import org.json.JSONObject;
 
@@ -18,26 +17,50 @@ public class ServWay
 
     ////////////////////////////////////////////////////////////
     // method
-    public SWToken ValidToken(int peerid, String token)
+    public SWToken ValidToken(WebSocket peer, String token)
     {
         return null;
     }
 
-    public void SendPacket(int peerid, final JSONObject json)
-    {
-    }
-
-    public void SendError(int peerid, final JSONObject json, String text)
-    {
-    }
-
     public void OnLogin(WebSocket peer, final JSONObject json)
     {
-        JSONObject out = new JSONObject();
+        final var programid = json.getString("programid");
+        final var deviceid = json.getString("deviceid");
+
+        var author = "-";
+        if(GetProgram(programid).mFastLogin.containsKey(deviceid))
+            author = mPrograms.get(programid).mFastLogin.get(deviceid);
+
+        // 새 토큰을 생성
+        final var tokencode = SWProgram.CreateTokenCode(deviceid);
+        var newtoken = GetToken(tokencode);
+        newtoken.mProgramID = programid;
+        newtoken.mAuthor = author;
+        newtoken.mDeviceID = deviceid;
+
+        // 피어에 토큰등록 및 유효기간갱신
+        ValidToken(peer, tokencode);
+
+        // 응답처리1
+        var out = new JSONObject();
         out.put("type", "Logined");
-        out.put("author", "Man");
-        out.put("token", "1234");
+        out.put("author", author);
+        out.put("token", tokencode);
         peer.send(out.toString());
+
+        System.out.println("send ===> " + out.toString());////////////////////////////////
+
+        // 응답처리2
+        if(!author.equals("-"))
+        {
+            var CurProfile = mPrograms.get(programid).GetProfile(programid, author, true);
+            if(CurProfile != null)
+            {
+                CurProfile.SendPacket(mServer, peer);
+                // 혹시 입장상태가 아니었다면 포커싱된 피어들에게 알림
+                CurProfile.ValidStatus(mServer, true);
+            }
+        }
     }
 
     public void OnLoginUpdate(WebSocket peer, final JSONObject json)
@@ -101,12 +124,32 @@ public class ServWay
     {
     }
 
+    public SWToken GetToken(String key)
+    {
+        if(!mTokens.containsKey(key))
+        {
+            try {mTokens.put(key, new SWToken());}
+            catch(Exception e) {}
+        }
+        return mTokens.get(key);
+    }
+
+    public SWProgram GetProgram(String key)
+    {
+        if(!mPrograms.containsKey(key))
+        {
+            try {mPrograms.put(key, new SWProgram());}
+            catch(Exception e) {}
+        }
+        return mPrograms.get(key);
+    }
+
     ////////////////////////////////////////////////////////////
     // member
-    public int mPort;
-    public int mServer;
-    public int mPacketMutex;
-    public Hashtable<Integer, String> mPeerTokens; // [peerid:33]
-    public Hashtable<String, SWToken> mTokens; // [token:ClInavrmjQ357437]
-    public Hashtable<String, SWProgram> mPrograms; // [programid:ZayPro]
+    public int mPort = -1;
+    public int mServer = -1;
+    public int mPacketMutex = -1;
+    public Hashtable<Integer, String> mPeerTokens = new Hashtable<>(); // [peerid:33]
+    public Hashtable<String, SWToken> mTokens = new Hashtable<>(); // [token:ClInavrmjQ357437]
+    public Hashtable<String, SWProgram> mPrograms = new Hashtable<>(); // [programid:ZayPro]
 }
