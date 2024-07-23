@@ -72,14 +72,16 @@ public class Main extends WebSocketServer
         switch(in.getString("type"))
         {
         case "Login": mServWay.OnLogin(conn, in); break;
-        case "OnLoginUpdate": mServWay.OnLoginUpdate(conn, in); break;
-        case "OnLogout": mServWay.OnLogout(conn, in); break;
-        case "OnFocusProfile": mServWay.OnFocusProfile(conn, in); break;
-        case "OnUnfocusProfile": mServWay.OnUnfocusProfile(conn, in); break;
-        case "OnLockAsset": mServWay.OnLockAsset(conn, in); break;
-        case "OnUnlockAsset": mServWay.OnUnlockAsset(conn, in); break;
-        case "OnFocusRange": mServWay.OnFocusRange(conn, in); break;
-        case "OnUnfocusRange": mServWay.OnUnfocusRange(conn, in); break;
+        case "LoginUpdate": mServWay.OnLoginUpdate(conn, in); break;
+        case "Logout": mServWay.OnLogout(conn, in); break;
+        case "FocusProfile": mServWay.OnFocusProfile(conn, in); break;
+        case "UnfocusProfile": mServWay.OnUnfocusProfile(conn, in); break;
+        case "LockAsset": mServWay.OnLockAsset(conn, in); break;
+        case "UnlockAsset": mServWay.OnUnlockAsset(conn, in); break;
+        case "FocusRange": mServWay.OnFocusRange(conn, in); break;
+        case "UnfocusRange": mServWay.OnUnfocusRange(conn, in); break;
+        default: mServWay.SendError(conn, in, "This type cannot be processed");
+            break;
         }
     }
 

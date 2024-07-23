@@ -42,9 +42,12 @@ public class SWProgram
 
     ////////////////////////////////////////////////////////////
     // static
+    private static int gLastSeed = (int)(Math.random() * Integer.MAX_VALUE);
     public static String CreateTokenCode(String deviceid)
     {
-        return "";
+        final int skipvalue = 10 + (int)(Math.random() * 90); // 10 ~ 99
+        gLastSeed = (gLastSeed + skipvalue) % 1000000; // 0 ~ 999999
+        return String.format("%s%06d", deviceid, gLastSeed);
     }
 
     public static String CreateTimeTag()
